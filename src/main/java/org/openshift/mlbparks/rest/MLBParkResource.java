@@ -12,6 +12,7 @@ import javax.ws.rs.QueryParam;
 
 import org.openshift.mlbparks.domain.MLBPark;
 import org.openshift.mlbparks.mongo.DBConnection;
+import org.openshift.mlbparks.postgresql.DBPostgreSQLConnection;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -25,6 +26,9 @@ public class MLBParkResource {
 
 	@Inject
 	private DBConnection dbConnection;
+
+	@Inject
+	private DBPostgreSQLConnection dbPostgreSQLConnection;
 
 	private DBCollection getMLBParksCollection() {
 		DB db = dbConnection.getDB();
@@ -49,18 +53,19 @@ public class MLBParkResource {
 	@GET()
 	@Produces("application/json")
 	public List<MLBPark> getAllParks() {
+		//TODO We don't need to parse the info if we are using the PostgreSQLDB
 		ArrayList<MLBPark> allParksList = new ArrayList<MLBPark>();
-
-		DBCollection mlbParks = this.getMLBParksCollection();
-		DBCursor cursor = mlbParks.find();
-		try {
-			while (cursor.hasNext()) {
-				allParksList.add(this.populateParkInformation(cursor.next()));
-			}
-		} finally {
-			cursor.close();
-		}
-
+		allParksList = dbPostgreSQLConnection.getMLBParks();
+//		DBCollection mlbParks = this.getMLBParksCollection();
+//		DBCursor cursor = mlbParks.find();
+//		try {
+//			while (cursor.hasNext()) {
+//				allParksList.add(this.populateParkInformation(cursor.next()));
+//			}
+//		} finally {
+//			cursor.close();
+//		}
+//
 		return allParksList;
 	}
 
