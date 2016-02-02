@@ -75,6 +75,15 @@ public class MLBParkResource {
 	public List<MLBPark> findParksWithin(@QueryParam("lat1") float lat1,
 			@QueryParam("lon1") float lon1, @QueryParam("lat2") float lat2,
 			@QueryParam("lon2") float lon2) {
+		return dbPostgreSQLConnection.getMLBParksWithRange(lat1, lon1, lat2, lon2);
+	}
+	
+	/*@GET
+	@Produces("application/json")
+	@Path("within")
+	public List<MLBPark> findParksWithin(@QueryParam("lat1") float lat1,
+			@QueryParam("lon1") float lon1, @QueryParam("lat2") float lat2,
+			@QueryParam("lon2") float lon2) {
 
 		ArrayList<MLBPark> allParksList = new ArrayList<MLBPark>();
 		DBCollection mlbParks = this.getMLBParksCollection();
@@ -102,5 +111,5 @@ public class MLBParkResource {
 		}
 
 		return allParksList;
-	}
+	}*/
 }
