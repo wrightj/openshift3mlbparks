@@ -71,7 +71,6 @@ public class DBPostgreSQLConnection {
 			logger.log(Level.SEVERE,"The database is empty.  We need to populate it");
 			JSONParser jsonParser = new JSONParser();
 			PreparedStatement st = null;
-			ResultSet rs = null;
 			try {
 				
 				String currentLine = new String();
@@ -88,7 +87,8 @@ public class DBPostgreSQLConnection {
 						+ "lat      double precision,"
 						+ "long     double precision"
 						+ ")");
-				st.execute();
+				st.executeUpdate();
+				st.close();
 				while ((currentLine = in.readLine()) != null) {
 					JSONObject jsonObject = (JSONObject) jsonParser.parse(currentLine);
 					String name=jsonObject.get("name").toString();
@@ -111,8 +111,7 @@ public class DBPostgreSQLConnection {
 					st.setString(4, ballpark);
 					st.setString(5, league);
 					st.setLong(6, payroll);
-					rs=st.executeQuery();
-					rs.close();
+					st.executeUpdate();
 					st.close();
 					teamsImported++;
 					
@@ -123,7 +122,6 @@ public class DBPostgreSQLConnection {
 				logger.log(Level.SEVERE,"Failed to initialize database: "+e.getMessage(),e);
 			} finally {
 				try {
-					rs.close();
 					st.close();
 				} catch (Exception e) {}
 			}
