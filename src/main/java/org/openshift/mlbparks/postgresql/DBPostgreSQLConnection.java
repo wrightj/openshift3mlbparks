@@ -78,7 +78,9 @@ public class DBPostgreSQLConnection {
 						"https://raw.githubusercontent.com/securepaas/openshift3mlbparks/master/input.txt");
 				BufferedReader in = new BufferedReader(new InputStreamReader(jsonFile.openStream()));
 			
-				st=conn.prepareStatement("create table mlbparks ("
+				st=conn.prepareStatement("DROP TABLE IF EXISTS  mlbparks");
+				st.executeUpdate();
+				st.executeUpdate("create table mlbparks ("
 						+ "id	    SERIAL UNIQUE,"
 						+ "name		VARCHAR(255),"
 						+ "payroll  bigint,"
@@ -87,7 +89,6 @@ public class DBPostgreSQLConnection {
 						+ "lat      double precision,"
 						+ "long     double precision"
 						+ ")");
-				st.executeUpdate();
 				st.close();
 				while ((currentLine = in.readLine()) != null) {
 					JSONObject jsonObject = (JSONObject) jsonParser.parse(currentLine);
