@@ -110,7 +110,7 @@ public class DBPostgreSQLConnection {
 					st.setDouble(3, longval);
 					st.setString(4, ballpark);
 					st.setString(5, league);
-					st.setString(6, payroll);
+					st.setInt(6, Integer.getInteger(payroll));
 					rs=st.executeQuery();
 					rs.close();
 					st.close();
@@ -180,10 +180,15 @@ public class DBPostgreSQLConnection {
 				MLBPark mlbpark = new MLBPark();
 				mlbpark.setId(rs.getString("id"));
 				mlbpark.setName(rs.getString("name"));
-				mlbpark.setPosition(this.processCoordinates(rs.getString("coordinates")));
+				
+				//TODO Fix this
+				double longval=rs.getDouble("long");
+				double latval=rs.getDouble("lat");
+				
+				mlbpark.setPosition(processCoordinates(longval,latval));
 				mlbpark.setBallpark(rs.getString("ballpark"));
 				mlbpark.setLeague(rs.getString("league"));
-				mlbpark.setPayroll(rs.getString("payroll"));
+				mlbpark.setPayroll(rs.getInt("payroll"));
 
 				result.add(mlbpark);
 			}
@@ -199,15 +204,11 @@ public class DBPostgreSQLConnection {
 		return result;
 	}
 	
-	private Map<String,List<Double>> processCoordinates(String coord){
+	private Map<String,List<Double>> processCoordinates(double longval,double latval){
 		Map<String,List<Double>> result = new HashMap<String,List<Double>>();
-		String[] coordinates= coord.split(":");
-		for (int i = 0; i < coordinates.length; i++) {
-			logger.log(Level.FINE,coordinates[i]);
-		}
 		List<Double> c = new ArrayList<Double>();
-		c.add(Double.valueOf(coordinates[0]));
-		c.add(Double.valueOf(coordinates[1]));
+		c.add(Double.valueOf(longval));
+		c.add(Double.valueOf(latval));
 		result.put("coordinates",c);
 		return result;
 				
@@ -216,7 +217,7 @@ public class DBPostgreSQLConnection {
 	//TODO on postgresql the coord record should be persisted like it's shown below 
 	public static void main(String []args){
 		DBPostgreSQLConnection c = new DBPostgreSQLConnection();
-		Map<String,List<Double>> t= c.processCoordinates("coordinates:-84.38839:33.734708");
+		Map<String,List<Double>> t= c.processCoordinates(-84.38839,33.734708);
 		logger.log(Level.FINE,"Result"+t);
 	}
 }
