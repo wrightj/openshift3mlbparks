@@ -174,8 +174,7 @@ public class DBPostgreSQLConnection {
 				st.setDouble(3, lon1);
 				st.setDouble(4, lon2);
 			}		
-			rs = st.executeQuery();
-			
+			rs = st.executeQuery();		
 			while (rs.next()) {
 				MLBPark mlbpark = new MLBPark();
 				mlbpark.setId(rs.getString("id"));
