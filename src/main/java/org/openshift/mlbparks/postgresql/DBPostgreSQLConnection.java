@@ -94,7 +94,7 @@ public class DBPostgreSQLConnection {
 					String name=jsonObject.get("name").toString();
 					String ballpark=jsonObject.get("ballpark").toString();
 					String league=jsonObject.get("league").toString();
-					long payroll=(int)jsonObject.get("payroll");
+					long payroll=(long)jsonObject.get("payroll");
 					double latval,longval;
 					
 					JSONArray coords= (JSONArray) jsonObject.get("coordinates");
