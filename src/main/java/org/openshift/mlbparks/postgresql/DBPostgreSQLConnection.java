@@ -82,7 +82,7 @@ public class DBPostgreSQLConnection {
 				st=conn.prepareStatement("create table mlbparks ("
 						+ "id	    SERIAL UNIQUE,"
 						+ "name		VARCHAR(255),"
-						+ "payroll  int2,"
+						+ "payroll  bigint,"
 						+ "ballpark VARCHAR(255),"
 						+ "league   VARCHAR(255),"
 						+ "lat      double precision,"
@@ -94,7 +94,7 @@ public class DBPostgreSQLConnection {
 					String name=jsonObject.get("name").toString();
 					String ballpark=jsonObject.get("ballpark").toString();
 					String league=jsonObject.get("league").toString();
-					int payroll=(int)jsonObject.get("payroll");
+					long payroll=(int)jsonObject.get("payroll");
 					double latval,longval;
 					
 					JSONArray coords= (JSONArray) jsonObject.get("coordinates");
@@ -110,7 +110,7 @@ public class DBPostgreSQLConnection {
 					st.setDouble(3, longval);
 					st.setString(4, ballpark);
 					st.setString(5, league);
-					st.setInt(6, payroll);
+					st.setLong(6, payroll);
 					rs=st.executeQuery();
 					rs.close();
 					st.close();
@@ -188,7 +188,7 @@ public class DBPostgreSQLConnection {
 				mlbpark.setPosition(processCoordinates(longval,latval));
 				mlbpark.setBallpark(rs.getString("ballpark"));
 				mlbpark.setLeague(rs.getString("league"));
-				mlbpark.setPayroll(rs.getInt("payroll"));
+				mlbpark.setPayroll(rs.getLong("payroll"));
 
 				result.add(mlbpark);
 			}
