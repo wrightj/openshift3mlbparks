@@ -8,7 +8,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -146,7 +145,12 @@ public class DBPostgreSQLConnection {
 
 	}
 	
-	public ArrayList<MLBPark> getMLBParks(boolean range,float lat1,float lon1, float lat2,float lon2)
+	public ArrayList<MLBPark> getMLBParksWithRange(float lat1,float lon1, float lat2,float lon2)
+	{
+		return getMLBParks(true,lat1, lon1, lat2, lon2);
+	}
+	
+	private ArrayList<MLBPark> getMLBParks(boolean range,float lat1,float lon1, float lat2,float lon2)
 	{
 		ArrayList<MLBPark> result = new ArrayList<MLBPark>();
 		PreparedStatement st = null;
