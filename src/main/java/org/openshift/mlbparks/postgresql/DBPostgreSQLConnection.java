@@ -95,19 +95,19 @@ public class DBPostgreSQLConnection {
 					String ballpark=jsonObject.get("ballpark").toString();
 					String league=jsonObject.get("league").toString();
 					String payroll=jsonObject.get("payroll").toString();
-					String latval,longval;
+					double latval,longval;
 					
 					JSONArray coords= (JSONArray) jsonObject.get("coordinates");
 					@SuppressWarnings("unchecked")
 					Iterator<Double> iterator = coords.iterator();
-					longval=iterator.next().toString();
-					latval=iterator.next().toString();
+					longval=iterator.next();
+					latval=iterator.next();
 					
 					st=conn.prepareStatement("insert into mlbparks (name,lat,long,ballpark,league,payroll) values "
 							+ "(?,?,?,?,?,?)");
 					st.setString(1, name);
-					st.setString(2, latval);
-					st.setString(3, longval);
+					st.setDouble(2, latval);
+					st.setDouble(3, longval);
 					st.setString(4, ballpark);
 					st.setString(5, league);
 					st.setString(6, payroll);
