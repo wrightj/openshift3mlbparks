@@ -196,7 +196,7 @@ public class DBPostgreSQLConnection {
 			try {
 				rs.close();
 				st.close();
-			} catch (SQLException e) {}
+			} catch (Exception e) {}
 		}
 		return result;
 	}
