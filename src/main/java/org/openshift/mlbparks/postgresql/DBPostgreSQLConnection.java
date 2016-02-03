@@ -105,12 +105,12 @@ public class DBPostgreSQLConnection {
 					
 					st=conn.prepareStatement("insert into mlbparks (name,lat,long,ballpark,league,payroll) values "
 							+ "(?,?,?,?,?,?)");
-					st.setString(2, name);
-					st.setString(3, latval);
-					st.setString(4, longval);
-					st.setString(5, ballpark);
-					st.setString(6, league);
-					st.setString(7, payroll);
+					st.setString(1, name);
+					st.setString(2, latval);
+					st.setString(3, longval);
+					st.setString(4, ballpark);
+					st.setString(5, league);
+					st.setString(6, payroll);
 					rs=st.executeQuery();
 					rs.close();
 					st.close();
