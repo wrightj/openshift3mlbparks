@@ -115,6 +115,7 @@ public class DBPostgreSQLConnection {
 					rs.close();
 					st.close();
 					teamsImported++;
+					
 				}
 				logger.log(Level.FINE,"Successfully imported " + teamsImported + " teams.");
 
