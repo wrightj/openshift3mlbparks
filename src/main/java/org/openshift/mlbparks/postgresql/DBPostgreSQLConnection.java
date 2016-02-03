@@ -88,9 +88,7 @@ public class DBPostgreSQLConnection {
 						+ "lat      double precision,"
 						+ "long     double precision"
 						+ ")");
-				boolean tableMade=st.execute();
-				if(!tableMade)
-					throw new Exception("Failed to make table");
+				st.execute();
 				while ((currentLine = in.readLine()) != null) {
 					JSONObject jsonObject = (JSONObject) jsonParser.parse(currentLine);
 					String name=jsonObject.get("name").toString();
