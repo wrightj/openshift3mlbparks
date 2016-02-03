@@ -67,7 +67,7 @@ public class DBPostgreSQLConnection {
 	
 	private void initDatabase() {
 		int teamsImported = 0;
-		if (conn!=null && getMLBParks().isEmpty()) {
+		if (conn!=null) {
 			logger.log(Level.SEVERE,"The database is empty.  We need to populate it");
 			JSONParser jsonParser = new JSONParser();
 			PreparedStatement st = null;
@@ -116,7 +116,7 @@ public class DBPostgreSQLConnection {
 					teamsImported++;
 					
 				}
-				logger.log(Level.FINE,"Successfully imported " + teamsImported + " teams.");
+				logger.log(Level.INFO,"Successfully imported " + teamsImported + " teams.");
 
 			} catch (Exception e) {
 				logger.log(Level.SEVERE,"Failed to initialize database: "+e.getMessage(),e);
@@ -164,10 +164,10 @@ public class DBPostgreSQLConnection {
 			
 			if(range)
 			{
-				logger.log(Level.FINE,"North lat is: "+lat1);
-				logger.log(Level.FINE,"South lat is: "+lat2);
-				logger.log(Level.FINE,"East long is: "+lon1);
-				logger.log(Level.FINE,"West long is: "+lon2);
+				logger.log(Level.INFO,"North lat is: "+lat1);
+				logger.log(Level.INFO,"South lat is: "+lat2);
+				logger.log(Level.INFO,"East long is: "+lon1);
+				logger.log(Level.INFO,"West long is: "+lon2);
 				st.setDouble(1, lat1);
 				st.setDouble(2, lat2);
 				st.setDouble(3, lon1);
@@ -202,20 +202,18 @@ public class DBPostgreSQLConnection {
 		return result;
 	}
 	
-	private Map<String,List<Double>> processCoordinates(double longval,double latval){
-		Map<String,List<Double>> result = new HashMap<String,List<Double>>();
+	private List<Double> processCoordinates(double longval,double latval){
 		List<Double> c = new ArrayList<Double>();
 		c.add(Double.valueOf(longval));
 		c.add(Double.valueOf(latval));
-		result.put("coordinates",c);
-		return result;
+		return c;
 				
 	}
 	
 	//TODO on postgresql the coord record should be persisted like it's shown below 
 	public static void main(String []args){
 		DBPostgreSQLConnection c = new DBPostgreSQLConnection();
-		Map<String,List<Double>> t= c.processCoordinates(-84.38839,33.734708);
-		logger.log(Level.FINE,"Result"+t);
+		List<Double> t= c.processCoordinates(-84.38839,33.734708);
+		logger.log(Level.INFO,"Result"+t);
 	}
 }
