@@ -36,6 +36,13 @@ public class DBPostgreSQLConnection {
 		String postgresqlUser = System.getenv("POSTGRESQL_USER");
 		String postgresqlPassword = System.getenv("POSTGRESQL_PASSWORD");
 		String postgresqlDBName = System.getenv("POSTGRESQL_DATABASE");
+		// Check if we are using a postgres template or postgres RHEL 7 image
+		if (postgresqlHost == null) {
+			postgresqlHost = System.getenv("POSTGRESQL_92_RHEL7_SERVICE_HOST");
+		} 
+		if (postgresqlPort == null) {
+			postgresqlPort = System.getenv("POSTGRESQL_92_RHEL7_SERVICE_PORT");
+		}
 		boolean connected=false;
 		try {
 			Class.forName("org.postgresql.Driver");

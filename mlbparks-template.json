@@ -4,9 +4,9 @@
     "metadata": {
         "name": "mlbparks",
         "annotations": {
-            "description": "Application template for MLB Parks application on EAP 6 \u0026 MongoDB built using STI,",
+            "description": "Application template for MLB Parks application on EAP 6 \u0026 Postgresql built using STI,",
             "iconClass": "icon-jboss",
-            "tags": "eap,javaee,java,jboss,xpaas,mongodb,instant-app"
+            "tags": "eap,javaee,java,jboss,xpaas,postgres,instant-app"
         }
     },
     "objects": [
@@ -219,20 +219,20 @@
                                         "value": "${HORNETQ_TOPICS}"
                                     },
                                     {
-                                        "name": "MONGODB_USER",
-                                        "value": "${MONGODB_USER}"
+                                        "name": "POSTGRESQL_USER",
+                                        "value": "${POSTGRESQL_USER}"
                                     },
                                     {
-                                        "name": "MONGODB_PASSWORD",
-                                        "value": "${MONGODB_PASSWORD}"
+                                        "name": "POSTGRESQL_PASSWORD,
+                                        "value": "${POSTGRESQL_PASSWORD}"
                                     },
                                     {
-                                        "name": "MONGODB_DATABASE",
-                                        "value": "${MONGODB_DATABASE}"
+                                        "name": "POSTGRESQL_DATABASE",
+                                        "value": "${POSTGRESQL_DATABASE}"
                                     },
                                     {
-                                        "name": "MONGODB_ADMIN_PASSWORD",
-                                        "value": "${MONGODB_ADMIN_PASSWORD}"
+                                        "name": "POSTGRESQL_ADMIN_PASSWORD",
+                                        "value": "${POSTGRESQL_ADMIN_PASSWORD}"
                                     }
                                 ]
                             }
@@ -251,10 +251,10 @@
             "spec": {
                 "ports": [
                     {
-                        "name": "mongo",
+                        "name": "postgres",
                         "protocol": "TCP",
-                        "port": 27017,
-                        "targetPort": 27017,
+                        "port": 5432,
+                        "targetPort": 5432,
                         "nodePort": 0
                     }
                 ],
@@ -287,11 +287,11 @@
                         "imageChangeParams": {
                             "automatic": true,
                             "containerNames": [
-                                "mongodb"
+                                "postgresql"
                             ],
                             "from": {
                                 "kind": "ImageStreamTag",
-                                "name": "mongodb:latest",
+                                "name": "postgresql:latest",
                                 "namespace": "openshift"
                             },
                             "lastTriggeredImage": ""
@@ -315,37 +315,37 @@
                     "spec": {
                         "containers": [
                             {
-                                "name": "mongodb",
-                                "image": "mongodb",
+                                "name": "postgresql",
+                                "image": "postgresql",
                                 "ports": [
                                     {
-                                        "containerPort": 27017,
+                                        "containerPort": 5432,
                                         "protocol": "TCP"
                                     }
                                 ],
                                 "env": [
                                     {
-                                        "name": "MONGODB_USER",
-                                        "value": "${MONGODB_USER}"
+                                        "name": "POSTGRESQL_USER",
+                                        "value": "${POSTGRESQL_USER}"
                                     },
                                     {
-                                        "name": "MONGODB_PASSWORD",
-                                        "value": "${MONGODB_PASSWORD}"
+                                        "name": "POSTGRESQL_PASSWORD",
+                                        "value": "${POSTGRESQL_PASSWORD}"
                                     },
                                     {
-                                        "name": "MONGODB_DATABASE",
-                                        "value": "${MONGODB_DATABASE}"
+                                        "name": "POSTGRESQL_DATABASE",
+                                        "value": "${POSTGRESQL_DATABASE}"
                                     },
                                     {
-                                        "name": "MONGODB_ADMIN_PASSWORD",
-                                        "value": "${MONGODB_ADMIN_PASSWORD}"
+                                        "name": "POSTGRESQL_ADMIN_PASSWORD",
+                                        "value": "${POSTGRESQL_ADMIN_PASSWORD}"
                                     }
                                 ],
                                 "resources": {},
                                 "volumeMounts": [
                                     {
                                         "name": "${DATABASE_SERVICE_NAME}-data",
-                                        "mountPath": "/var/lib/mongodb/data"
+                                        "mountPath": "/var/lib/pgsql/data"
                                     }
                                 ],
                                 "terminationMessagePath": "/dev/termination-log",
@@ -437,31 +437,31 @@
         {
             "name": "DATABASE_SERVICE_NAME",
             "description": "Database service name",
-            "value": "mongodb",
+            "value": "postgresql",
             "required": true
         },
         {
-            "name": "MONGODB_USER",
-            "description": "Username for MongoDB user that will be used for accessing the database",
+            "name": "POSTGRESQL_USER",
+            "description": "Username for Postgres user that will be used for accessing the database",
             "generate": "expression",
             "from": "user[A-Z0-9]{3}",
             "required": true
         },
         {
-            "name": "MONGODB_PASSWORD",
-            "description": "Password for the MongoDB user",
+            "name": "POSTGRESQL_PASSWORD",
+            "description": "Password for the Postgres user",
             "generate": "expression",
             "from": "[a-zA-Z0-9]{16}",
             "required": true
         },
         {
-            "name": "MONGODB_DATABASE",
+            "name": "POSTGRESQL_DATABASE",
             "description": "Database name",
             "value": "sampledb",
             "required": true
-        },
+        },        
         {
-            "name": "MONGODB_ADMIN_PASSWORD",
+            "name": "POSTGRESQL_ADMIN_PASSWORD",
             "description": "Password for the database admin user",
             "generate": "expression",
             "from": "[a-zA-Z0-9]{16}",
