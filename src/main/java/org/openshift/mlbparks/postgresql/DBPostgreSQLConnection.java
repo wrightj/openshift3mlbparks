@@ -99,9 +99,9 @@ public class DBPostgreSQLConnection {
 					
 					JSONArray coords= (JSONArray) jsonObject.get("coordinates");
 					@SuppressWarnings("unchecked")
-					Iterator<String> iterator = coords.iterator();
-					longval=iterator.next();
-					latval=iterator.next();
+					Iterator<Double> iterator = coords.iterator();
+					longval=iterator.next().toString();
+					latval=iterator.next().toString();
 					
 					st=conn.prepareStatement("insert into mlbparks (name,lat,long,ballpark,league,payroll) values "
 							+ "(?,?,?,?,?,?)");
@@ -119,7 +119,7 @@ public class DBPostgreSQLConnection {
 				logger.log(Level.FINE,"Successfully imported " + teamsImported + " teams.");
 
 			} catch (Exception e) {
-				e.printStackTrace();
+				logger.log(Level.SEVERE,"Failed to initialize database: "+e.getMessage(),e);
 			} finally {
 				try {
 					rs.close();
