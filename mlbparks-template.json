@@ -4,7 +4,7 @@
     "metadata": {
         "name": "mlbparks",
         "annotations": {
-            "description": "Application template for MLB Parks application on EAP 6 \u0026 Postgresql built using STI",
+            "description": "Application template for MLB Parks application on EAP 6 \u0026 Postgresql built using STI,",
             "iconClass": "icon-jboss",
             "tags": "eap,javaee,java,jboss,xpaas,postgres,instant-app"
         }
@@ -223,7 +223,7 @@
                                         "value": "${POSTGRESQL_USER}"
                                     },
                                     {
-                                        "name": "POSTGRESQL_PASSWORD,
+                                        "name": "POSTGRESQL_PASSWORD",
                                         "value": "${POSTGRESQL_PASSWORD}"
                                     },
                                     {
@@ -345,7 +345,7 @@
                                 "volumeMounts": [
                                     {
                                         "name": "${DATABASE_SERVICE_NAME}-data",
-                                        "mountPath": "/var/lib/pgsql/data"
+                                        "mountPath": "/var/lib/psql/data"
                                     }
                                 ],
                                 "terminationMessagePath": "/dev/termination-log",
@@ -387,7 +387,7 @@
         {
             "name": "SOURCE_REPOSITORY_URL",
             "description": "Git source URI for application",
-            "value": "https://github.com/gshipley/openshift3mlbparks",
+            "value": "https://github.com/securepaas/openshift3mlbparks",
             "required": true
         },
         {
