@@ -4,7 +4,7 @@
     "metadata": {
         "name": "mlbparks",
         "annotations": {
-            "description": "Application template for MLB Parks application on EAP 6 \u0026 Postgresql built using STI,",
+            "description": "Application template for MLB Parks application on EAP 6 \u0026 Postgresql built using STI",
             "iconClass": "icon-jboss",
             "tags": "eap,javaee,java,jboss,xpaas,postgres,instant-app"
         }
