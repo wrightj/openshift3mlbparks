@@ -459,7 +459,7 @@
             "description": "Database name",
             "value": "sampledb",
             "required": true
-        },        
+        },
         {
             "name": "POSTGRESQL_ADMIN_PASSWORD",
             "description": "Password for the database admin user",
